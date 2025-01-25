@@ -1,10 +1,10 @@
 chrome.tabs.onUpdated.addListener(async (tabId) => {
     const data=await chrome.storage.sync.get(["isApplyChanges",'scrollWidth']);
     const promiseQueue=[];
-    if(!data.isApplyChanges){
+    if(data.isApplyChanges===undefined){
         promiseQueue.push(chrome.storage.sync.set({isApplyChanges:true}));
     }
-    if(!data.scrollWidth){
+    if(data.scrollWidth===undefined){
         promiseQueue.push(chrome.storage.sync.set({scrollWidth:50}));
     }
     const applyPromise=chrome.tabs.sendMessage(tabId, {
